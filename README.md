@@ -1,6 +1,6 @@
 # Phaser 3 with TypeScript and Webpack
 
-A simple game with Phaser, TypeScript and Webpack
+A simple game with Phaser, TypeScript and Webpack playable here: https://mizar999.github.io/phaser-typescript-webpack/
 
 ## Resources
 
