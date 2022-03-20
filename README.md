@@ -6,6 +6,10 @@ A simple game with Phaser, TypeScript and Webpack playable here: https://mizar99
 
 - [How to build a simple game in the browser with Phaser 3 and TypeScript](https://medium.freecodecamp.org/how-to-build-a-simple-game-in-the-browser-with-phaser-3-and-typescript-bdc94719135) by Mariya Davydova [@mariyadavydova](https://www.freecodecamp.org/news/author/mariya/)
 
+## Assets
+
+- [Simple Space](https://www.kenney.nl/assets/simple-space) by [Kenney](https://www.kenney.nl/)
+
 ## Project setup
 
 - Init npm and install necessary packages

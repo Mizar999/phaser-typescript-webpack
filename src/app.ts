@@ -1,3 +1,4 @@
+import {GameScene} from "./scenes/game-scene";
 import {Types, Game} from "phaser";
 
 const config: Types.Core.GameConfig = {
@@ -5,7 +6,7 @@ const config: Types.Core.GameConfig = {
     width: 800,
     height: 600,
     parent: "game",
-    scene: [], // List of scenes to create; 1st scene is the initial scene.
+    scene: [GameScene], // List of scenes to create; 1st scene is the initial scene.
     physics: {
         default: "arcade",
         arcade: {
