@@ -71,7 +71,7 @@ A simple game with Phaser, TypeScript and Webpack
     npm run-script build
     ```
 
-- To run multiple npm scripts cross platform in parallel run the following command (use the **nra** script if the packages were installed locally):
+- To run multiple npm scripts cross platform in parallel run the following command (use the **nra** script if the packages were installed locally, see: [Issue #209](https://github.com/mysticatea/npm-run-all/issues/209)):
 
     ```powershell
     # if globally installed
