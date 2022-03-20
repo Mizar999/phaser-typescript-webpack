@@ -16,7 +16,7 @@ A simple game with Phaser, TypeScript and Webpack playable here: https://mizar99
 
     ```powershell
     npm init -y
-    npm install --save-dev typescript@4.6.2 ts-loader@9.2.8 webpack@5.70.0 webpack-cli@4.9.2 phaser@3.55.2 live-server@1.1.0 npm-run-all@4.1.5
+    npm install --save-dev typescript@4.6.2 ts-loader@9.2.8 webpack@5.70.0 webpack-cli@4.9.2 phaser@3.55.2 live-server@1.1.0 concurrently@7.0.0
     ```
 - Create **Webpack** configuration `webpack.config.js`:
 
@@ -62,7 +62,6 @@ A simple game with Phaser, TypeScript and Webpack playable here: https://mizar99
 
     ```json
     "scripts": {
-        "nra": "node node_modules/npm-run-all/bin/npm-run-all",
         "build": "webpack",
         "watch": "webpack --watch",
         "serve": "live-server --port=8085"
@@ -75,22 +74,12 @@ A simple game with Phaser, TypeScript and Webpack playable here: https://mizar99
     npm run-script build
     ```
 
-- To run multiple npm scripts cross platform in parallel run the following command (use the **nra** script if the packages were installed locally, see: [Issue #209](https://github.com/mysticatea/npm-run-all/issues/209)):
+- To run multiple npm scripts cross platform in parallel run the following command:
 
     ```powershell
     # if globally installed
-    npm-run-all --parallel watch serve
+    concurrently npm:watch npm:serve
 
     # if locally installed
-    npm run nra -- -p watch serve
-    ```
-
-- Or use the shorthand command **run-p** for parallel tasks:
-
-    ```powershell
-    # if globally installed
-    run-p watch serve
-
-    # if locally installed
-    npm run nra -- -p watch serve
+    npx concurrently npm:watch npm:serve
     ```
