@@ -1,7 +1,7 @@
 import "phaser";
 
 export class GameScene extends Phaser.Scene {
-    stars: { x: number, y: number }[];
+    stars: Phaser.GameObjects.Image[];
 
     constructor() {
         super({
@@ -47,6 +47,23 @@ export class GameScene extends Phaser.Scene {
 
         let star = this.add.image(x, y, "space", id);
         star.setDisplaySize(size, size);
-        this.stars.push(star)
+        this.stars.push(star);
+
+        this.tweens.add({
+            targets: star,
+            alpha: Phaser.Math.FloatBetween(0.4, 0.7),
+            delay: Phaser.Math.Between(0, 800),
+            repeatDelay: 70,
+            hold: Phaser.Math.Between(5000, 10000),
+            ease: 'Back',
+            repeat: -1,
+            yoyo: true,
+            onStart: function (tween) {
+                tween.timeScale = Phaser.Math.FloatBetween(1, 4);
+            },
+            onYoyo: function (tween) {
+                tween.timeScale = Phaser.Math.FloatBetween(0.4, 1.5);
+            }
+        });
     }
 }
