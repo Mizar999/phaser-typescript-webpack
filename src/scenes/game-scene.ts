@@ -21,6 +21,10 @@ export class GameScene extends Phaser.Scene {
             this.addStar();
             count--;
         }
+
+        let size = 25;
+        let temp = this.add.rectangle(0, this.game.canvas.height - size, this.game.canvas.width, size, 0x005596, 0.4);
+        temp.setOrigin(0, 0);
     }
 
     private addStar(): void {
@@ -31,8 +35,8 @@ export class GameScene extends Phaser.Scene {
         let alreadyExists: boolean;
 
         do {
-            x = Phaser.Math.Between(size / 2, 800 - size / 2);
-            y = Phaser.Math.Between(size / 2, 600 - size / 2);
+            x = Phaser.Math.Between(size / 2, this.game.canvas.width - size / 2);
+            y = Phaser.Math.Between(size / 2, this.game.canvas.height - size / 2);
             for (let element of this.stars) {
                 alreadyExists = Math.abs(x - element.x) < size && Math.abs(y - element.y) < size;
                 if (alreadyExists) {
@@ -43,6 +47,6 @@ export class GameScene extends Phaser.Scene {
 
         let star = this.add.image(x, y, "space", id);
         star.setDisplaySize(size, size);
-        this.stars.push({ x: x, y: y })
+        this.stars.push(star)
     }
 }
