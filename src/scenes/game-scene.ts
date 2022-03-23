@@ -52,17 +52,17 @@ export class GameScene extends Phaser.Scene {
         this.tweens.add({
             targets: star,
             alpha: Phaser.Math.FloatBetween(0.4, 0.7),
-            delay: Phaser.Math.Between(0, 800),
+            delay: Phaser.Math.Between(0, 600),
             repeatDelay: 70,
             hold: Phaser.Math.Between(5000, 10000),
             ease: 'Back',
             repeat: -1,
             yoyo: true,
             onStart: function (tween) {
-                tween.timeScale = Phaser.Math.FloatBetween(1, 4);
+                tween.timeScale = Phaser.Math.FloatBetween(0.8, 2);
             },
             onYoyo: function (tween) {
-                tween.timeScale = Phaser.Math.FloatBetween(0.4, 1.5);
+                tween.timeScale = Phaser.Math.FloatBetween(0.6, 1.5);
             }
         });
     }
