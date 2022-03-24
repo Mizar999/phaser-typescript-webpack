@@ -2,6 +2,7 @@ import "phaser";
 
 export class GameScene extends Phaser.Scene {
     stars: Phaser.GameObjects.Image[];
+    asteroidFrames: number[];
 
     constructor() {
         super({
@@ -9,6 +10,7 @@ export class GameScene extends Phaser.Scene {
         });
 
         this.stars = [];
+        this.asteroidFrames = [24, 25, 26, 27, 32, 33, 34, 35];
     }
 
     preload(): void {
@@ -22,6 +24,26 @@ export class GameScene extends Phaser.Scene {
             count--;
         }
 
+        let asteroidSize = 78;
+        let x, y: number;
+        let tempImage: Phaser.GameObjects.Image;
+        for (let element of this.asteroidFrames) {
+            x = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.width - asteroidSize / 2);
+            y = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.height - asteroidSize / 2);
+            tempImage = this.add.image(x, y, "space", element);
+            tempImage.setDisplaySize(asteroidSize, asteroidSize);
+
+            this.tweens.add({
+                targets: tempImage,
+                angle: Phaser.Math.FloatBetween(0, 1) < 0.5 ? -360 : 360,
+                loop: true,
+                repeat: -1,
+                onStart: function (tween) {
+                    tween.timeScale = Phaser.Math.FloatBetween(0.3, 0.6);
+                }
+            });
+        }
+
         let size = 25;
         let temp = this.add.rectangle(0, this.game.canvas.height - size, this.game.canvas.width, size, 0x005596, 0.4);
         temp.setOrigin(0, 0);
@@ -30,8 +52,7 @@ export class GameScene extends Phaser.Scene {
     private addStar(): void {
         let size = 26;
         let id = Phaser.Math.Between(28, 31);
-        let y: number;
-        let x: number;
+        let x, y: number;
         let alreadyExists: boolean;
 
         do {
