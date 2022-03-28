@@ -8,9 +8,9 @@ const config: Types.Core.GameConfig = {
     parent: "game",
     scene: [GameScene], // List of scenes to create; 1st scene is the initial scene.
     physics: {
-        default: "arcade",
-        arcade: {
-            debug: false,
+        default: "matter",
+        matter: {
+            debug: true
         }
     },
     backgroundColor: "#000000"

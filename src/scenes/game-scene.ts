@@ -18,6 +18,8 @@ export class GameScene extends Phaser.Scene {
     }
 
     create(): void {
+        this.matter.world.setBounds().disableGravity();
+
         let count = Phaser.Math.Between(30, 35);
         while (count > 0) {
             this.addStar();
@@ -26,15 +28,23 @@ export class GameScene extends Phaser.Scene {
 
         let asteroidSize = 78;
         let x, y: number;
-        let tempImage: Phaser.GameObjects.Image;
+        let sprite: Phaser.Physics.Matter.Sprite;
         for (let element of this.asteroidFrames) {
             x = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.width - asteroidSize / 2);
             y = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.height - asteroidSize / 2);
-            tempImage = this.add.image(x, y, "space", element);
-            tempImage.setDisplaySize(asteroidSize, asteroidSize);
+            sprite = this.matter.add.sprite(x, y, "space", element);
+            if (element % 2 == 0) {
+                sprite.setDisplaySize(asteroidSize, asteroidSize);
+                sprite.setCircle(asteroidSize / 2.85);
+            } else {
+                sprite.setDisplaySize(asteroidSize - 15, asteroidSize - 15);
+                sprite.setCircle(asteroidSize / 4.9);
+            }
+            
+            console.log(this.matter.bodies);
 
             this.tweens.add({
-                targets: tempImage,
+                targets: sprite,
                 angle: Phaser.Math.FloatBetween(0, 1) < 0.5 ? -360 : 360,
                 loop: true,
                 repeat: -1,
@@ -47,6 +57,7 @@ export class GameScene extends Phaser.Scene {
         let size = 25;
         let temp = this.add.rectangle(0, this.game.canvas.height - size, this.game.canvas.width, size, 0x005596, 0.4);
         temp.setOrigin(0, 0);
+        this.matter.add.rectangle(temp.x, temp.y, temp.width, temp.height);
     }
 
     private addStar(): void {
