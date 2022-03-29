@@ -2,7 +2,7 @@ import "phaser";
 
 export class GameScene extends Phaser.Scene {
     stars: Phaser.GameObjects.Image[];
-    asteroidFrames: number[];
+    asteroidFrames: { id: number, size: number, boundingBox: string, radius: number }[];
 
     constructor() {
         super({
@@ -10,7 +10,16 @@ export class GameScene extends Phaser.Scene {
         });
 
         this.stars = [];
-        this.asteroidFrames = [24, 25, 26, 27, 32, 33, 34, 35];
+        this.asteroidFrames = [
+            { id: 24, size: 78, boundingBox: "circle", radius: 27.5 },
+            { id: 25, size: 63, boundingBox: "circle", radius: 16 },
+            { id: 26, size: 78, boundingBox: "rectangle", radius: 47.5 },
+            { id: 27, size: 63, boundingBox: "rectangle", radius: 27.5 },
+            { id: 32, size: 78, boundingBox: "circle", radius: 27.5 },
+            { id: 33, size: 63, boundingBox: "circle", radius: 16 },
+            { id: 34, size: 78, boundingBox: "rectangle", radius: 47.5 },
+            { id: 35, size: 63, boundingBox: "rectangle", radius: 27.5 }
+        ];
     }
 
     preload(): void {
@@ -32,16 +41,24 @@ export class GameScene extends Phaser.Scene {
         for (let element of this.asteroidFrames) {
             x = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.width - asteroidSize / 2);
             y = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.height - asteroidSize / 2);
-            sprite = this.matter.add.sprite(x, y, "space", element);
-            if (element % 2 == 0) {
-                sprite.setDisplaySize(asteroidSize, asteroidSize);
-                sprite.setCircle(asteroidSize / 2.85);
-            } else {
-                sprite.setDisplaySize(asteroidSize - 15, asteroidSize - 15);
-                sprite.setCircle(asteroidSize / 4.9);
+
+            sprite = this.matter.add.sprite(x, y, "space", element.id);
+            sprite.setDisplaySize(element.size, element.size);
+            if (element.boundingBox === "circle") {
+                sprite.setCircle(element.radius);
+            } else if (element.boundingBox === "rectangle") {
+                let vertices = [
+                    { x: 0, y: 0 },
+                    { x: element.radius * 0.4, y: 0 },
+                    { x: element.radius, y: 0 },
+                    { x: element.radius, y: element.radius },
+                    { x: 0, y: element.radius }
+                ];
+                this.matter.vertices.rotate(vertices, Phaser.Math.DegToRad(33), { x: 0, y: 0 })
+                sprite.setRectangle(element.radius, element.radius, {
+                    vertices: vertices
+                });
             }
-            
-            console.log(this.matter.bodies);
 
             this.tweens.add({
                 targets: sprite,
