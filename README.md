@@ -10,7 +10,16 @@ A simple game with Phaser, TypeScript and Webpack playable here: https://mizar99
 
 - [Simple Space](https://www.kenney.nl/assets/simple-space) by [Kenney](https://www.kenney.nl/)
 
-## Project setup
+## Development
+
+If you want to develop the project further, the following commands should be sufficient:
+
+```powershell
+git clone https://github.com/Mizar999/phaser-typescript-webpack.git
+npm install
+```
+
+## New Phaser project - Setup
 
 - Init npm and install necessary packages
 
