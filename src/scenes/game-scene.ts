@@ -34,48 +34,13 @@ export class GameScene extends Phaser.Scene {
             this.addStar();
             count--;
         }
-
-        let asteroidSize = 78;
-        let x, y: number;
-        let vertices: MatterJS.Vector[];
-        let sprite: Phaser.Physics.Matter.Sprite;
-        for (let element of this.asteroidFrames) {
-            x = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.width - asteroidSize / 2);
-            y = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.height - asteroidSize / 2);
-
-            sprite = this.matter.add.sprite(x, y, "space", element.id);
-            sprite.setDisplaySize(element.size, element.size);
-            if (element.boundingBox === "circle") {
-                sprite.setCircle(element.radius);
-            } else if (element.boundingBox === "rectangle") {
-                vertices = [
-                    { x: 0, y: 0 },
-                    { x: element.radius * 0.4, y: 0 },
-                    { x: element.radius, y: 0 },
-                    { x: element.radius, y: element.radius },
-                    { x: 0, y: element.radius }
-                ];
-                this.matter.vertices.rotate(vertices, Phaser.Math.DegToRad(element.angle), { x: 0, y: 0 })
-                sprite.setRectangle(element.radius, element.radius, {
-                    vertices: vertices
-                });
-            }
-
-            this.tweens.add({
-                targets: sprite,
-                angle: Phaser.Math.FloatBetween(0, 1) < 0.5 ? -360 : 360,
-                loop: true,
-                repeat: -1,
-                onStart: function (tween) {
-                    tween.timeScale = Phaser.Math.FloatBetween(0.3, 0.6);
-                }
-            });
-        }
+        this.addMeteors();
 
         let size = 25;
         let temp = this.add.rectangle(0, this.game.canvas.height - size, this.game.canvas.width, size, 0x005596, 0.4);
         temp.setOrigin(0, 0);
         this.matter.add.rectangle(temp.x, temp.y, temp.width, temp.height);
+        console.log(this.matter.world.eventNames());
     }
 
     private addStar(): void {
@@ -115,5 +80,46 @@ export class GameScene extends Phaser.Scene {
                 tween.timeScale = Phaser.Math.FloatBetween(0.6, 1.5);
             }
         });
+    }
+
+    private addMeteors(): void {
+        let asteroidSize = 78;
+        let x, y: number;
+        let vertices: MatterJS.Vector[];
+        let sprite: Phaser.Physics.Matter.Sprite;
+        for (let element of this.asteroidFrames) {
+            x = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.width - asteroidSize / 2);
+            y = Phaser.Math.Between(asteroidSize / 2, this.game.canvas.height - asteroidSize / 2);
+
+            sprite = this.matter.add.sprite(x, y, "space", element.id);
+            sprite.setDisplaySize(element.size, element.size);
+            if (element.boundingBox === "circle") {
+                sprite.setCircle(element.radius);
+            } else if (element.boundingBox === "rectangle") {
+                vertices = [
+                    { x: 0, y: 0 },
+                    { x: element.radius * 0.4, y: 0 },
+                    { x: element.radius, y: 0 },
+                    { x: element.radius, y: element.radius },
+                    { x: 0, y: element.radius }
+                ];
+                this.matter.vertices.rotate(vertices, Phaser.Math.DegToRad(element.angle), { x: 0, y: 0 })
+                sprite.setRectangle(element.radius, element.radius, {
+                    vertices: vertices
+                });
+            }
+
+            sprite.body
+
+            this.tweens.add({
+                targets: sprite,
+                angle: Phaser.Math.FloatBetween(0, 1) < 0.5 ? -360 : 360,
+                loop: true,
+                repeat: -1,
+                onStart: function (tween) {
+                    tween.timeScale = Phaser.Math.FloatBetween(0.3, 0.6);
+                }
+            });
+        }
     }
 }
