@@ -25,7 +25,7 @@ npm install
 
     ```powershell
     npm init -y
-    npm install --save-dev typescript@4.6.2 ts-loader@9.2.8 webpack@5.70.0 webpack-cli@4.9.2 phaser@3.55.2 live-server@1.1.0 concurrently@7.0.0
+    npm install --save-dev typescript@4.6.4 ts-loader@9.3.0 webpack@5.72.1 webpack-cli@4.9.2 phaser@3.55.2 http-server@14.1.0 concurrently@7.2.1
     ```
 - Create **Webpack** configuration `webpack.config.js`:
 
@@ -73,7 +73,7 @@ npm install
     "scripts": {
         "build": "webpack",
         "watch": "webpack --watch",
-        "serve": "live-server --port=8085"
+        "serve": "http-server --port=8085"
     }
     ```
 
