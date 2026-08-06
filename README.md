@@ -1,4 +1,4 @@
-# Phaser 3 with TypeScript and Webpack
+# Phaser 3 with TypeScript and Webpack (or vite)
 
 A simple game with Phaser, TypeScript and Webpack playable here: https://mizar999.github.io/phaser-typescript-webpack/
 
