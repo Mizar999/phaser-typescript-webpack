@@ -40,7 +40,7 @@ export class GameScene extends Phaser.Scene {
         let temp = this.add.rectangle(0, this.game.canvas.height - size, this.game.canvas.width, size, 0x005596, 0.4);
         temp.setOrigin(0, 0);
         this.matter.add.rectangle(temp.x, temp.y, temp.width, temp.height);
-        console.log(this.matter.world.eventNames());
+        // console.log(this.matter.world.eventNames());
     }
 
     private addStar(): void {
