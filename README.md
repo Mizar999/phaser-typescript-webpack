@@ -1,6 +1,10 @@
-# Phaser 3 with TypeScript and Webpack
+# Phaser 3 with TypeScript & Vite
 
-A simple game with Phaser, TypeScript and Webpack playable here: https://mizar999.github.io/phaser-typescript-webpack/
+A simple game built with **Phaser 3**, **TypeScript**, and **Vite**.
+
+**Playable Demo:** [https://mizar999.github.io/phaser-typescript-webpack/](https://mizar999.github.io/phaser-typescript-webpack/)
+
+---
 
 ## Resources
 
@@ -10,85 +14,103 @@ A simple game with Phaser, TypeScript and Webpack playable here: https://mizar99
 
 - [Simple Space](https://www.kenney.nl/assets/simple-space) by [Kenney](https://www.kenney.nl/)
 
+---
+
 ## Development
 
-If you want to develop the project further, the following commands should be sufficient:
+To clone and develop this project locally:
 
 ```powershell
 git clone https://github.com/Mizar999/phaser-typescript-webpack.git
+cd phaser-typescript-webpack
 npm install
+npm run dev
 ```
 
-## New Phaser project - Setup
+### Available Scripts
 
-- Init npm and install necessary packages
+| Command | Description |
+| :--- | :--- |
+| `npm run dev` | Starts the Vite dev server with instant Hot Module Replacement (HMR). |
+| `npm run build` | Runs TypeScript type-checking and builds the production bundle into `dist/`. |
+| `npm run preview` | Previews the production build locally. |
 
-    ```powershell
-    npm init -y
-    npm install --save-dev typescript@4.9.4 ts-loader@9.4.2 webpack@5.75.0 webpack-cli@5.0.1 phaser@3.55.2 http-server@14.1.1 concurrently@7.6.0
-    ```
-- Create **Webpack** configuration `webpack.config.js`:
+---
 
-    ```javascript
-    const path = require('path');
+## New Project Setup from Scratch
 
-    module.exports = {
-    entry: './src/app.ts',
-    module: {
-        rules:[{
-            test: /\.tsx?$/,
-            use: 'ts-loader',
-            exclude: /node_modules/
-        }]
-    },
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js']
-    },
-    output: {
-        filename: 'app.js',
-        path: path.resolve(__dirname, 'dist')
-    },
-    mode: 'development'
-    };
-    ```
+If you want to set up a new Phaser 3 project with TypeScript and Vite from scratch:
 
-- Webpack will get the sources from `src/app.ts` and collect everything in `dist/app.js` file
-- Create **TypeScript** configuration `tsconfig.json`:
+1. **Initialize NPM project & install dependencies:**
 
-    ```json
-    {
-        "compilerOptions": {
-            "target": "es5"
-        },
-        "include": [
-            "src/*"
-        ]
-    }
-    ```
+   ```powershell
+   npm init -y
+   npm install --save-dev typescript vite phaser
+   ```
 
-- Download the [Phaser 3 definitions](https://github.com/photonstorm/phaser/tree/master/types) into the `src` subdirectory (`src/phaser.d.ts`)
-- Update the **scripts**-section of the `package.json` file. The nra script can be used if the npm packages were locally installed:
+2. **Create Vite configuration (`vite.config.ts`):**
 
-    ```json
-    "scripts": {
-        "build": "webpack",
-        "watch": "webpack --watch",
-        "serve": "http-server --port=8085 -c-1"
-    }
-    ```
+   ```typescript
+   import { defineConfig } from 'vite';
 
-- To build the application run:
+   export default defineConfig({
+     base: './',
+     build: {
+       outDir: 'dist',
+     },
+   });
+   ```
 
-    ```powershell
-    npm run-script build
-    ```
+3. **Create TypeScript configuration (`tsconfig.json`):**
 
-- To run multiple npm scripts cross platform in parallel run the following command:
+   ```json
+   {
+     "compilerOptions": {
+       "target": "ES2020",
+       "useDefineForClassFields": true,
+       "module": "ESNext",
+       "lib": ["ES2020", "DOM", "DOM.Iterable"],
+       "skipLibCheck": true,
+       "moduleResolution": "node",
+       "allowSyntheticDefaultImports": true,
+       "strict": false,
+       "noEmit": true
+     },
+     "include": ["src"]
+   }
+   ```
 
-    ```powershell
-    # if globally installed
-    concurrently npm:watch npm:serve
+4. **Create HTML Entry Point (`index.html`):**
 
-    # if locally installed
-    npx concurrently npm:watch npm:serve
-    ```
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+     <head>
+       <meta charset="UTF-8" />
+       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       <title>Starfall Game</title>
+     </head>
+     <body>
+       <div id="game"></div>
+       <script type="module" src="/src/app.ts"></script>
+     </body>
+   </html>
+   ```
+
+5. **Configure `package.json` scripts:**
+
+   ```json
+   "scripts": {
+     "dev": "vite",
+     "build": "tsc && vite build",
+     "preview": "vite preview"
+   }
+   ```
+
+---
+
+## Automatic Deployment (GitHub Pages)
+
+This repository uses an automated GitHub Actions workflow defined in `.github/workflows/deploy.yml`.
+
+Every push to the `main` or `master` branch automatically triggers a build and deploys the generated site directly to GitHub Pages.
